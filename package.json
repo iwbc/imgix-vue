@@ -19,8 +19,7 @@
     "imgix",
     "component"
   ],
-  "main": "dist/imgix-vue.umd.js",
-  "module": "dist/imgix-vue.esm.js",
+  "main": "dist/imgix-vue.esm.js",
   "jsnext:main": "dist/imgix-vue.esm.js",
   "unpkg": "dist/imgix-vue.min.js",
   "version": "3.1.1",
@@ -35,7 +34,6 @@
     "test:e2e": "concurrently --n \"vite,cypress\" --p \"[{name}]\" -c \"green,yellow\" \"yarn dev\" \"npx cypress run --browser chrome\" --kill-others --success first",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "lint:ci": "eslint --no-fix --max-warnings 0",
-    "prepare": "run-s build",
     "prepublishOnly": "run-s build",
     "release:dryRun": "npx node-env-run --exec 'npx semantic-release --dryRun'"
   },

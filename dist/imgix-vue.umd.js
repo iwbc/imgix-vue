@@ -1,4 +1,10 @@
 /*! licenses: /vendor.LICENSE.txt */
+var __defProp = Object.defineProperty;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
 (function(global, factory) {
   typeof exports === "object" && typeof module !== "undefined" ? factory(exports, require("vue")) : typeof define === "function" && define.amd ? define(["exports", "vue"], factory) : (global = typeof globalThis !== "undefined" ? globalThis : global || self, factory(global["imgix-vue"] = {}, global.Vue));
 })(this, function(exports2, vue) {
@@ -158,7 +164,7 @@
     extendUint8Array,
     extendBuiltins
   };
-  var md5$1 = { exports: {} };
+  var md5 = { exports: {} };
   var crypt = { exports: {} };
   (function() {
     var base64map = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/", crypt$1 = {
@@ -259,7 +265,7 @@
     return typeof obj.readFloatLE === "function" && typeof obj.slice === "function" && isBuffer(obj.slice(0, 0));
   }
   (function() {
-    var crypt$1 = crypt.exports, utf8 = charenc_1.utf8, isBuffer2 = isBuffer_1, bin = charenc_1.bin, md52 = function(message, options) {
+    var crypt$1 = crypt.exports, utf8 = charenc_1.utf8, isBuffer2 = isBuffer_1, bin = charenc_1.bin, md5$1 = function(message, options) {
       if (message.constructor == String)
         if (options && options.encoding === "binary")
           message = bin.stringToBytes(message);
@@ -275,7 +281,7 @@
       }
       m[l >>> 5] |= 128 << l % 32;
       m[(l + 64 >>> 9 << 4) + 14] = l;
-      var FF = md52._ff, GG = md52._gg, HH = md52._hh, II = md52._ii;
+      var FF = md5$1._ff, GG = md5$1._gg, HH = md5$1._hh, II = md5$1._ii;
       for (var i = 0; i < m.length; i += 16) {
         var aa = a, bb = b, cc = c, dd = d;
         a = FF(a, b, c, d, m[i + 0], 7, -680876936);
@@ -349,32 +355,31 @@
       }
       return crypt$1.endian([a, b, c, d]);
     };
-    md52._ff = function(a, b, c, d, x, s, t) {
+    md5$1._ff = function(a, b, c, d, x, s, t) {
       var n = a + (b & c | ~b & d) + (x >>> 0) + t;
       return (n << s | n >>> 32 - s) + b;
     };
-    md52._gg = function(a, b, c, d, x, s, t) {
+    md5$1._gg = function(a, b, c, d, x, s, t) {
       var n = a + (b & d | c & ~d) + (x >>> 0) + t;
       return (n << s | n >>> 32 - s) + b;
     };
-    md52._hh = function(a, b, c, d, x, s, t) {
+    md5$1._hh = function(a, b, c, d, x, s, t) {
       var n = a + (b ^ c ^ d) + (x >>> 0) + t;
       return (n << s | n >>> 32 - s) + b;
     };
-    md52._ii = function(a, b, c, d, x, s, t) {
+    md5$1._ii = function(a, b, c, d, x, s, t) {
       var n = a + (c ^ (b | ~d)) + (x >>> 0) + t;
       return (n << s | n >>> 32 - s) + b;
     };
-    md52._blocksize = 16;
-    md52._digestsize = 16;
-    md5$1.exports = function(message, options) {
+    md5$1._blocksize = 16;
+    md5$1._digestsize = 16;
+    md5.exports = function(message, options) {
       if (message === void 0 || message === null)
         throw new Error("Illegal argument " + message);
-      var digestbytes = crypt$1.wordsToBytes(md52(message, options));
+      var digestbytes = crypt$1.wordsToBytes(md5$1(message, options));
       return options && options.asBytes ? digestbytes : options && options.asString ? bin.bytesToString(digestbytes) : crypt$1.bytesToHex(digestbytes);
     };
   })();
-  var md5 = md5$1.exports;
   const PLUS_RE = /\+/g;
   function decode(text = "") {
     try {
@@ -725,7 +730,7 @@
       key: "_signParams",
       value: function _signParams(path, queryParams) {
         var signatureBase = this.settings.secureURLToken + path + queryParams;
-        var signature = md5(signatureBase);
+        var signature = md5.exports(signatureBase);
         return queryParams.length > 0 ? queryParams + "&s=" + signature : "?s=" + signature;
       }
     }, {
@@ -943,26 +948,28 @@
       });
     }
   });
-  const VERSION = "3.1.0";
+  const VERSION = "3.1.1";
   const clientOptionDefaults = {
     includeLibraryParam: true
   };
   class VueImgixClient {
     constructor(options) {
-      this.buildIxParams = (ixParams) => {
+      __publicField(this, "client");
+      __publicField(this, "options");
+      __publicField(this, "buildIxParams", (ixParams) => {
         return {
           ...this.options.defaultIxParams,
           ...ixParams
         };
-      };
-      this.buildUrlObject = (url, ixParams, options2 = {}) => {
+      });
+      __publicField(this, "buildUrlObject", (url, ixParams, options = {}) => {
         const {
           widths,
           widthTolerance,
           minWidth,
           maxWidth,
           ...sharedOptions
-        } = options2;
+        } = options;
         const src = this._buildUrl(url, ixParams);
         const srcset = this._buildSrcSet(url, ixParams, {
           widths,
@@ -972,35 +979,35 @@
           ...sharedOptions
         });
         return { src, srcset };
-      };
-      this.buildUrl = (url, ixParams) => {
+      });
+      __publicField(this, "buildUrl", (url, ixParams) => {
         return this.client.buildURL(url, this.buildIxParams(ixParams));
-      };
-      this._buildUrl = (url, ixParams) => {
+      });
+      __publicField(this, "_buildUrl", (url, ixParams) => {
         if (!url.includes("://")) {
           return this.client.buildURL(url, this.buildIxParams(ixParams));
         } else {
           return ImgixClient._buildURL(url, this.buildIxParams(ixParams));
         }
-      };
-      this.buildSrcSet = (url, ixParams, options2) => {
-        return this.client.buildSrcSet(url, this.buildIxParams(ixParams), options2);
-      };
-      this._buildSrcSet = (url, ixParams, options2) => {
+      });
+      __publicField(this, "buildSrcSet", (url, ixParams, options) => {
+        return this.client.buildSrcSet(url, this.buildIxParams(ixParams), options);
+      });
+      __publicField(this, "_buildSrcSet", (url, ixParams, options) => {
         if (!url.includes("://")) {
           return this.client.buildSrcSet(
             url,
             this.buildIxParams(ixParams),
-            options2
+            options
           );
         } else {
           return ImgixClient._buildSrcSet(
             url,
             this.buildIxParams(ixParams),
-            options2
+            options
           );
         }
-      };
+      });
       this.options = { ...clientOptionDefaults, ...options };
       this.client = new ImgixClient({
         domain: this.options.domain,
@@ -1102,7 +1109,7 @@
   exports2.buildSrcSet = buildSrcSet;
   exports2.buildUrl = buildUrl;
   exports2.buildUrlObject = buildUrlObject;
-  exports2["default"] = plugin;
+  exports2.default = plugin;
   exports2.ensureVueImgixClientSingleton = ensureVueImgixClientSingleton;
   exports2.initVueImgix = initVueImgix;
   exports2.install = install;
