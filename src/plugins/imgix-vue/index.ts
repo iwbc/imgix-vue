@@ -23,3 +23,5 @@ const plugin = {
 // To allow use as module (npm/webpack/etc.) export component
 export default plugin;
 export * from './imgix-vue';
+export { IxImgProps } from './ix-img'
+export { IxSourceProps } from './ix-source'

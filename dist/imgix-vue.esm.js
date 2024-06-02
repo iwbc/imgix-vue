@@ -1062,15 +1062,16 @@ const defaultAttributeMap = {
   src: "src",
   srcset: "srcset"
 };
-const IxSource = defineComponent({
-  props: {
-    src: {
-      type: String,
-      required: true
-    },
-    imgixParams: Object,
-    attributeConfig: Object
+const IxSourceProps = {
+  src: {
+    type: String,
+    required: true
   },
+  imgixParams: Object,
+  attributeConfig: Object
+};
+const IxSource = defineComponent({
+  props: IxSourceProps,
   setup(props) {
     const vueImgixSingleton = ensureVueImgixClientSingleton();
     const imgixParamsFromAttributes = {};
@@ -1103,6 +1104,8 @@ const plugin = {
 };
 export {
   IxImg,
+  IxImgProps,
+  IxSourceProps,
   buildImgixClient,
   buildSrcSet,
   buildUrl,

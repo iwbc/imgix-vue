@@ -1,7 +1,7 @@
 import { defineComponent, h } from 'vue';
 import { ensureVueImgixClientSingleton } from './imgix-vue';
 
-const IxImgProps = {
+export const IxImgProps = {
   src: {
     type: String,
     required: true,

@@ -1065,15 +1065,16 @@ var __publicField = (obj, key, value) => {
     src: "src",
     srcset: "srcset"
   };
-  const IxSource = vue.defineComponent({
-    props: {
-      src: {
-        type: String,
-        required: true
-      },
-      imgixParams: Object,
-      attributeConfig: Object
+  const IxSourceProps = {
+    src: {
+      type: String,
+      required: true
     },
+    imgixParams: Object,
+    attributeConfig: Object
+  };
+  const IxSource = vue.defineComponent({
+    props: IxSourceProps,
     setup(props) {
       const vueImgixSingleton = ensureVueImgixClientSingleton();
       const imgixParamsFromAttributes = {};
@@ -1105,6 +1106,8 @@ var __publicField = (obj, key, value) => {
     install
   };
   exports2.IxImg = IxImg;
+  exports2.IxImgProps = IxImgProps;
+  exports2.IxSourceProps = IxSourceProps;
   exports2.buildImgixClient = buildImgixClient;
   exports2.buildSrcSet = buildSrcSet;
   exports2.buildUrl = buildUrl;

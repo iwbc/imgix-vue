@@ -94,6 +94,29 @@ fixed: boolean;
 disableVariableQuality: boolean;
 }, {}>;
 
+export declare const IxImgProps: {
+    src: {
+        type: StringConstructor;
+        required: boolean;
+    };
+    fixed: BooleanConstructor;
+    imgixParams: ObjectConstructor;
+    width: (StringConstructor | NumberConstructor)[];
+    height: (StringConstructor | NumberConstructor)[];
+    attributeConfig: ObjectConstructor;
+    disableVariableQuality: BooleanConstructor;
+    sizes: StringConstructor[];
+};
+
+export declare const IxSourceProps: {
+    src: {
+        type: StringConstructor;
+        required: boolean;
+    };
+    imgixParams: ObjectConstructor;
+    attributeConfig: ObjectConstructor;
+};
+
 declare const plugin: {
     install: typeof install;
 };
